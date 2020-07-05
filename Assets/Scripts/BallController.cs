@@ -8,7 +8,7 @@ public class BallController : MonoBehaviour
 
 	// Timer for powerup
 	private float currTime; // waktu saat ini
-	private GameObject powerUp;
+	[SerializeField] public GameObject powerUp;
 	[SerializeField] private float strtTime = 10f; // waktu dimana akan muncul power up
 	private GameObject powerObject;
 	private bool assigned;
