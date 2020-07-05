@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.UI;
 
 
 [AddComponentMenu("")]
@@ -12,9 +13,11 @@ public class Network : NetworkManager
     public Transform left2RacketSpawn;
     public Transform right2RacketSpawn;
     public GameObject ballPrefab;
+    public GameObject scorePrefab;
     public int score1;
     public int score2;
     GameObject ball;
+    GameObject scoreBoard;
 
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
@@ -37,31 +40,56 @@ public class Network : NetworkManager
         // spawn ball if 4 players joined
         if (numPlayers == 2)
         {
+            InitScore();
+            scoreBoard = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Score Board"));
+            NetworkServer.Spawn(scoreBoard);
             ball = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "OnlineBall"));
             NetworkServer.Spawn(ball);
-            score1 = 0;
-            score2 = 0;
         }
     }
+
+
 
     public override void OnServerDisconnect(NetworkConnection conn)
     {
         // destroy ball
         if (ball != null)
             NetworkServer.Destroy(ball);
-
+        ResetScore();
         // call base functionality (actually destroys the player)
         base.OnServerDisconnect(conn);
     }
 
     public void SetScoreLeft()
     {
-        score2++;
+        if (score1 < 7)
+        {
+            score1++;
+        }
+
+        
     }
+
 
     public void SetScoreRight()
     {
-        score1++;
+        if (score1 < 7)
+        {
+            score2++;
+        }
+
+    }
+
+    public void InitScore()
+    {
+        score1 = 0;
+        score2 = 0;
+    }
+
+    public void ResetScore()
+    {
+        score1 = 0;
+        score2 = 0;
     }
 
 }
