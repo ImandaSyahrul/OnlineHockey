@@ -5,7 +5,8 @@ using Mirror;
 
 public class OnlineBallController : NetworkBehaviour
 {
-    public float speed = 30;
+    public Network network;
+    [SyncVar]public float speed = 30;
     public Rigidbody2D rigidbody2d;
 
     public override void OnStartServer()
@@ -20,6 +21,7 @@ public class OnlineBallController : NetworkBehaviour
         rigidbody2d.velocity = Vector2.right * speed;
     }
 
+    //Return bounch direction when ball hitting a racket or bat(hockey)
     float HitFactor(Vector2 ballPos, Vector2 racketPos, float racketHeight)
     {
         // ascii art:
@@ -58,5 +60,21 @@ public class OnlineBallController : NetworkBehaviour
             // Set Velocity with dir * speed
             rigidbody2d.velocity = dir * speed;
         }
+    }
+
+    [ServerCallback]
+    //Resetting ball position(server to client) and serve the ball
+    public void ResetBall()
+    {
+        rigidbody2d.velocity = new Vector2(0, 0);
+        transform.position = Vector2.zero;
+        Invoke("ServeBall",1);
+    }
+
+    [ServerCallback]
+    //Serve ball with random direction
+    void ServeBall()
+    {
+        rigidbody2d.velocity = Vector2.right * speed;
     }
 }

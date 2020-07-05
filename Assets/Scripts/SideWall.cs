@@ -10,17 +10,7 @@ public class SideWall : MonoBehaviour
 	// Skrip GameManager untuk mengakses skor maksimal
 	[SerializeField]private GameManager gameManager;
 
-	// Start is called before the first frame update
-	void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
 	// Akan dipanggil ketika objek lain ber-collider (bola) bersentuhan dengan dinding.
 	void OnTriggerEnter2D(Collider2D anotherCollider)
