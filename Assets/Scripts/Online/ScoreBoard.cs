@@ -6,15 +6,15 @@ using Mirror;
 
 public class ScoreBoard : NetworkBehaviour
 {
-    [SerializeField] private int side;
-    [SyncVar] private int score;
-    Text text;
+    [SyncVar] int score1;
+    [SyncVar] int score2;
+    public Text board1;
+    public Text board2;
     Network network;
     public Score scoreSystem;
     // Start is called before the first frame update
     void Start()
     {
-        text = GetComponent<Text>();
         scoreSystem = GameObject.FindObjectOfType<Score>();
         network = GameObject.FindObjectOfType<Network>();
     }
@@ -22,9 +22,9 @@ public class ScoreBoard : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (side == 1) 
-            score = scoreSystem.score2;
-        else score = scoreSystem.score1;
-        text.text = score.ToString();
+        score1 = scoreSystem.score1;
+        score2 = scoreSystem.score2;
+        board1.text = score2.ToString();
+        board2.text = score1.ToString();
     }
 }
