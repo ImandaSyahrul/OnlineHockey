@@ -27,7 +27,7 @@ public class Network : NetworkManager
             case 0: start = leftRacketSpawn; break;
             case 1: start = rightRacketSpawn; break;
             case 2: start = left2RacketSpawn; break;
-            case 4: start = right2RacketSpawn; break;
+            case 3: start = right2RacketSpawn; break;
             default: break;
         }
             
