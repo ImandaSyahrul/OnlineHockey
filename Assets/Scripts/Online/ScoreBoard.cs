@@ -10,10 +10,12 @@ public class ScoreBoard : NetworkBehaviour
     [SyncVar] private int score;
     Text text;
     Network network;
+    public Score scoreSystem;
     // Start is called before the first frame update
     void Start()
     {
         text = GetComponent<Text>();
+        scoreSystem = GameObject.FindObjectOfType<Score>();
         network = GameObject.FindObjectOfType<Network>();
     }
 
@@ -21,8 +23,8 @@ public class ScoreBoard : NetworkBehaviour
     void Update()
     {
         if (side == 1) 
-            score = network.score2;
-        else score = network.score1;
+            score = scoreSystem.score2;
+        else score = scoreSystem.score1;
         text.text = score.ToString();
     }
 }

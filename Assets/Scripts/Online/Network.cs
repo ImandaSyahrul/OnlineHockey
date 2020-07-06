@@ -14,8 +14,7 @@ public class Network : NetworkManager
     public Transform right2RacketSpawn;
     public GameObject ballPrefab;
     public GameObject scorePrefab;
-    public int score1;
-    public int score2;
+    public Score score;
     GameObject ball;
     GameObject scoreBoard;
 
@@ -37,10 +36,10 @@ public class Network : NetworkManager
         GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
         NetworkServer.AddPlayerForConnection(conn, player);
 
-        // spawn ball if 4 players joined
+        // spawn ball and start game if minimal 2 players joined
         if (numPlayers == 2)
         {
-            InitScore();
+            score.InitScore();
             scoreBoard = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Score Board"));
             NetworkServer.Spawn(scoreBoard);
             ball = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "OnlineBall"));
@@ -55,42 +54,15 @@ public class Network : NetworkManager
         // destroy ball
         if (ball != null)
             NetworkServer.Destroy(ball);
-        ResetScore();
+        // destroy score board
+        if (scoreBoard != null)
+            NetworkServer.Destroy(scoreBoard);
+        score.ResetScore();
         // call base functionality (actually destroys the player)
         base.OnServerDisconnect(conn);
     }
 
-    public void SetScoreLeft()
-    {
-        if (score1 < 7)
-        {
-            score1++;
-        }
-
-        
-    }
-
-
-    public void SetScoreRight()
-    {
-        if (score1 < 7)
-        {
-            score2++;
-        }
-
-    }
-
-    public void InitScore()
-    {
-        score1 = 0;
-        score2 = 0;
-    }
-
-    public void ResetScore()
-    {
-        score1 = 0;
-        score2 = 0;
-    }
+    
 
 }
 

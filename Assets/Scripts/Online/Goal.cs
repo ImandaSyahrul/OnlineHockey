@@ -6,6 +6,7 @@ using Mirror;
 public class Goal : NetworkBehaviour
 {
     public Network network;
+    public Score score;
     [SerializeField] int side;
 
 
@@ -13,8 +14,8 @@ public class Goal : NetworkBehaviour
     {
         if (collision.CompareTag("Ball"))
         {
-            if (side == 1) network.SetScoreLeft();
-            else network.SetScoreRight();
+            if (side == 1) score.SetScoreLeft();
+            else score.SetScoreRight();
             collision.gameObject.GetComponent<OnlineBallController>().ResetBall();
             
         }
