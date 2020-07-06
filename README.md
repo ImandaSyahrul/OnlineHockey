@@ -1,5 +1,4 @@
 # Online Hockey
-made with Unity 2019.3
 
 An online table hockey game.
 This game was created to complete distributed system's project.
